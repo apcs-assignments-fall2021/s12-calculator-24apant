@@ -45,7 +45,7 @@ public class NumberPadActionListener implements ActionListener {
 
         // This is a shortcut to tell if a button equals 1, 2, or 3
         if ("123".contains(buttonName)) {
-            field1.setText(buttonName);
+            field1.setText(field1.getText() + buttonName);
         }
         else if (buttonName.equals("Clear")) {
             field1.setText("");

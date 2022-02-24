@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
 
 public class Calculator implements ActionListener {
 
@@ -11,7 +12,7 @@ public class Calculator implements ActionListener {
     JButton button1, button2, button3, button4, button5,
             button6, button7, button8, button9, button0,
             buttonDivide, buttonTimes, buttonMinus, buttonPlus,
-            buttonClear, buttonEquals;
+            buttonClear, buttonEquals, buttonPow, buttonFact, buttonLog2, button10x;
 
     // Instance variables that will be used for our math
     String op;
@@ -69,9 +70,39 @@ public class Calculator implements ActionListener {
         buttonPlus = new JButton("+");
         panel4.add(buttonPlus);
 
+        buttonPow = new JButton("Pow");
+        panel4.add(buttonPow);
+        buttonLog2 = new JButton("log2");
+        panel4.add(buttonLog2);
+        buttonFact = new JButton("!");
+        panel4.add(buttonFact);
+        button10x = new JButton("10^x");
+        panel4.add(button10x);
+
+
         // Add implemented actionListener method to each button
         button1.addActionListener(this);
         button2.addActionListener(this);
+        button3.addActionListener(this);
+        button4.addActionListener(this);
+        button5.addActionListener(this);
+        button6.addActionListener(this);
+        button7.addActionListener(this);
+        button8.addActionListener(this);
+        button9.addActionListener(this);
+        button0.addActionListener(this);
+
+        buttonPlus.addActionListener(this);
+        buttonMinus.addActionListener(this);
+        buttonTimes.addActionListener(this);
+        buttonDivide.addActionListener(this);
+        buttonEquals.addActionListener(this);
+        buttonClear.addActionListener(this);
+
+        button10x.addActionListener(this);
+        buttonPow.addActionListener(this);
+        buttonFact.addActionListener(this);
+        buttonLog2.addActionListener(this);
         // ...
         // ...
         // YOUR CODE HERE
@@ -92,13 +123,69 @@ public class Calculator implements ActionListener {
 
     public void actionPerformed(ActionEvent ae) {
         String buttonName = ae.getActionCommand();
+        if("0123456789".contains(buttonName)){
+            field1.setText(field1.getText() + buttonName);
+        }
+        else if (buttonName.equals("AC")){
+            field1.setText("");
+        }
+        else if ("+-/*Pow".contains(buttonName)){
+            arg1 = Integer.parseInt(field1.getText());
+            field1.setText("");
+            op = buttonName;
 
-        if (buttonName.equals("1")) {
-            field1.setText(field1.getText() + "1");
         }
-        else if (buttonName.equals("2")) {
-            field1.setText(field1.getText() + "2");
+        else if(buttonName.equals("=")){
+            int arg2= Integer.parseInt(field1.getText());
+            if(op.equals("+")){
+                field1.setText(String.valueOf(arg1 + arg2));
+            }
+            else if(op.equals("-")){
+                field1.setText(String.valueOf(arg1 - arg2));
+            }
+
+            else if(op.equals("*")){
+                field1.setText(String.valueOf(arg1 * arg2));
+            }
+
+            else if(op.equals("/")){
+                field1.setText(String.valueOf(arg1 / arg2));
+            }
+            else if (op.equals("Pow")){
+                int total = 1;
+                for(int i = 0; i < arg2; i ++){
+                    total *= arg1;
+                }
+                field1.setText(String.valueOf(total));
+            }
         }
+        else if (buttonName.equals("!")){
+            int arg2 = Integer.parseInt(field1.getText());
+            int total = 1;
+            for(int i = arg2; i > 0; i --){
+                total *= i;
+            }
+            field1.setText(String.valueOf(total));
+        }
+        else if (buttonName.equals("10^x")){
+            int arg2 = Integer.parseInt(field1.getText());
+            int start = 1;
+            for(int i = 0; i < arg2; i ++){
+                start *= 10;
+            }
+            field1.setText(String.valueOf(start));
+        }
+        else if (buttonName.equals("log2")){
+            int arg2 = Integer.parseInt(field1.getText());
+            int count = 1;
+
+            for(int i = arg2; i > 0; i /=2){
+                count ++;
+            }
+            field1.setText(String.valueOf(count));
+
+        }
+
     }
 
     public static void main(String[] args) {

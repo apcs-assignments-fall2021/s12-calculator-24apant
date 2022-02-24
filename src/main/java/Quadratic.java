@@ -3,6 +3,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Quadratic {
+    LTPanel aPanel;
+    LTPanel bPanel;
+    LTPanel cPanel;
+    LTPanel answerPanel;
+    JButton calculateButton;
     public Quadratic() {
         // Set up the frame
         JFrame frame = new JFrame("Quadratic Formula");
@@ -11,11 +16,11 @@ public class Quadratic {
 
         // Set up and add the panels
         JPanel formulaPanel = new JPanel();
-        LTPanel aPanel = new LTPanel("a =", 10);
-        LTPanel bPanel = new LTPanel("b =", 10);
-        LTPanel cPanel = new LTPanel("c =", 10);
+         aPanel = new LTPanel("a =", 10);
+         bPanel = new LTPanel("b =", 10);
+         cPanel = new LTPanel("c =", 10);
         JPanel buttonPanel = new JPanel();
-        LTPanel answerPanel = new LTPanel("Answer:", 10);
+        answerPanel = new LTPanel("Answer:", 10);
 
         frame.add(formulaPanel);
         frame.add(aPanel);
@@ -39,12 +44,12 @@ public class Quadratic {
             }
         });
 
-        JButton calculateButton = new JButton("Calculate");
+        calculateButton = new JButton("Calculate");
         calculateButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 // Potentially a lot of code here
                 // But just add code to call quadForm
-
+                quadForm();
                 // YOUR CODE HERE
             }
         });
@@ -58,7 +63,18 @@ public class Quadratic {
     }
 
     public void quadForm() {
-        // YOUR CODE HERE
+        double a = Double.parseDouble(aPanel.getText());
+        double b = Double.parseDouble(bPanel.getText());
+        double c = Double.parseDouble(cPanel.getText());
+        double discriminant = (b * b) - (4 * a * c);
+        if (discriminant < 0){
+            answerPanel.setText("Error: Discriminant");
+        }
+        else{
+            double root1 = (-b + Math.sqrt(discriminant)) / 2 * a;
+            double root2 = (-b - Math.sqrt(discriminant)) / 2 * a;
+            answerPanel.setText(root1 + "  " + root2);
+        }
     }
 
     public static void main(String[] args) {
